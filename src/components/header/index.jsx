@@ -2,7 +2,7 @@ import Logo from "../logo"
 import Search from "../search"
 import User from "../user"
 
-function Header(props) {
+function Header() {
 
     return (
         <>

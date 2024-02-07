@@ -7,7 +7,7 @@ function Footer() {
     return (
         <>
             <footer className="bg-white py-2">
-                <div className="mx-[200px]">
+                <div className="mx-40">
                     <div className='flex justify-between gap-5 py-4'>
                         <Info 
                             title={"Hỗ trợ khách hàng"}

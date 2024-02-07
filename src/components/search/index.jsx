@@ -1,4 +1,18 @@
-function Search() {
+import React, { useState } from 'react';
+
+function Search(props) {
+
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const handleSearch = () => {
+        props.onSearch(searchTerm);
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
+    };
 
     return (
         <>
@@ -12,8 +26,14 @@ function Search() {
                     className="px-2 border-0 flex-auto focus:outline-none"
                     type="text" 
                     placeholder="Freeship đến 30k"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={handleKeyPress}
                 />
-                <button className="relative text-sky-700 hover:bg-sky-100 h-9 w-24 p-1 rounded-r-lg items-center justify-center before:block before:absolute before:h-6 before:border-l-2 before:left-0 before:top-2">
+                <button 
+                    className="relative text-sky-700 hover:bg-sky-100 h-9 w-24 p-1 rounded-r-lg items-center justify-center before:block before:absolute before:h-6 before:border-l-2 before:left-0 before:top-2"
+                    onClick={handleSearch}
+                >
                     Tìm kiếm
                 </button>
             </div>

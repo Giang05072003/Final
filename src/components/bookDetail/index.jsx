@@ -7,7 +7,7 @@ import BookInfoLarge from "../bookInfoLarge";
 import BookInfoSmall from "../bookInfoSmall";
 import BookLarge from "../bookLarge";
 
-function BookDetail() {
+function BookDetail(props) {
 
     const [books, setBooks] = useState([]);
     const [selectedBook, setSelectedBook] = useState({});
@@ -40,7 +40,6 @@ function BookDetail() {
 
 
     useEffect(() => {
-        console.log(selectedBook)
     }, [selectedBook]);
 
 
@@ -67,7 +66,7 @@ function BookDetail() {
                                 <BookInfoSmall book={selectedBook} />
                                 <BookDes book={selectedBook} />
                             </div>
-                            <BookBuy book={selectedBook} />
+                            <BookBuy book={selectedBook} onAddToCart={props.onAddToCart} />
                         </div>
                     )
                 )}

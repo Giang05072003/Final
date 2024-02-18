@@ -1,23 +1,57 @@
+import React, { useState, useEffect } from "react";
+
 function BookLarge(props) {
+
+    const [images, setImages] = useState([]);
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    useEffect(() => {
+        if (props.book.images && props.book.images.length > 0) {
+            setImages(props.book.images || []);
+            setSelectedImage(props.book.images[0]);
+        } else {
+            setImages([]);
+            setSelectedImage(null);
+        }
+    }, [props]);
+
+    const handleImageClick = (index) => {
+        setSelectedImage(images[index]);
+    };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const currentIndex = images.findIndex(image => image === selectedImage);
+            const nextIndex = (currentIndex + 1) % images.length;
+
+            setSelectedImage(images[nextIndex]);
+        }, 2000);
+
+        return () => clearInterval(interval);
+    }, [images, selectedImage]);
     
     return (
       <>
         <div className="bg-white flex flex-col rounded-lg py-4 h-fit gap-4">
             <div className="flex flex-col gap-2 px-4 w-full">
                 <div className="flex w-full items-center justify-center rounded-lg">
-                    <img className="w-96 h-96 rounded-lg" src="" alt="" />
+                    {selectedImage && (
+                        <img className="w-96 h-96 rounded-lg" src={selectedImage.large_url} alt="" />
+                    )}
                 </div>
                 <div>
                     <div className="flex gap-2">
-                        <div className="rounded-lg">
-                            <img className="w-11 h-11 rounded-lg" src="" alt="" />
-                        </div>
-                        <div className="rounded-lg">
-                            <img className="w-11 h-11 rounded-lg" src="" alt="" />
-                        </div>
-                        <div className="rounded-lg">
-                            <img className="w-11 h-11 rounded-lg" src="" alt="" />
-                        </div>
+                        {images.map((image, index) => (
+                            <div
+                                key={index}
+                                className={`rounded-lg border border-neutral-300 p-1 ${
+                                    selectedImage === image ? "border-blue-500" : ""
+                                }`}
+                                onClick={() => handleImageClick(index)}
+                            >
+                                <img className="w-11 h-11 rounded-lg" src={image.thumbnail_url} alt="" />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

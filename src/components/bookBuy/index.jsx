@@ -41,6 +41,10 @@ function BookBuy(props) {
         setQuantity(newQuantity);
     };
 
+    const handleAddToCartClick = () => {
+        props.onAddToCart(props.book, quantity);
+    };
+
 
     return (
         <>
@@ -80,10 +84,10 @@ function BookBuy(props) {
                         <button className="bg-red-500 rounded cursor-pointer font-light flex items-center justify-center p-2 gap-2 text-white whitespace-nowrap h-10 w-full">
                             <div>Mua ngay</div>
                         </button>
-                        <button className="flex justify-center items-center rounded p-2 gap-2 whitespace-nowrap cursor-pointer bg-white text-sky-700 border-solid border border-sky-700 w-full">
+                        <button onClick={handleAddToCartClick} className="flex justify-center items-center rounded p-2 gap-2 whitespace-nowrap cursor-pointer bg-white text-sky-700 border-solid border border-sky-700 w-full hover:bg-sky-700 hover:text-white">
                             <div>Thêm vào giỏ</div>
                         </button>
-                        <button className="flex justify-center items-center rounded p-2 gap-2 whitespace-nowrap cursor-pointer bg-white text-sky-700 border-solid border border-sky-700 w-full">
+                        <button className="flex justify-center items-center rounded p-2 gap-2 whitespace-nowrap cursor-pointer bg-white text-sky-700 border-solid border border-sky-700 w-full hover:bg-sky-700 hover:text-white">
                             <div>Mua trước trả sau</div>
                         </button>
                     </div>

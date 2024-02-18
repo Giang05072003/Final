@@ -28,14 +28,14 @@ function Search(props) {
 
     return (
         <>
-            <div className="flex bg-white rounded-lg border-solid border-2 items-center flex-auto">
+            <div className="flex bg-white rounded-lg border-solid border-2 items-center w-full h-fit">
                 <img
-                    className="w-5 h-5 ml-4"
+                    className="w-5 h-5 ml-4 max-[768px]:ml-2"
                     src="https://salt.tikicdn.com/ts/upload/33/d0/37/6fef2e788f00a16dc7d5a1dfc5d0e97a.png"
                     alt=""
                 />
                 <input 
-                    className="px-2 border-0 flex-auto focus:outline-none"
+                    className="px-2 border-0 w-full focus:outline-none rounded-lg"
                     type="text" 
                     placeholder="Freeship đến 30k"
                     value={searchTerm}

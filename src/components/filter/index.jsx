@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
 function Filter(props) {
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedCurrentSeller, setSelectedCurrentSeller] = useState([]);
     const [showPrice, setShowPrice] = useState(false);
     const [seeMoreText, setSeeMoreText] = useState('Xem thêm');
-    const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedPrice, setSelectedPrice] = useState(null);
     const [selectedStar, setSelectedStar] = useState(null);
 
@@ -12,14 +13,23 @@ function Filter(props) {
         setSelectedCategory(category);
     };
 
+    const handleSelectCurrentSeller = (currentSeller) => {
+        const updatedCurrentSeller = [...selectedCurrentSeller];
+
+        if (updatedCurrentSeller.includes(currentSeller)) {
+            const index = updatedCurrentSeller.indexOf(currentSeller);
+            updatedCurrentSeller.splice(index, 1);
+        } else {
+            updatedCurrentSeller.push(currentSeller);
+        }
+
+        props.onSelectCurrentSeller(updatedCurrentSeller);
+        setSelectedCurrentSeller(updatedCurrentSeller);
+    };
+
     const handleSelectPrice = (price) => {
         props.onSelectPrice(price);
         setSelectedPrice(price)
-    };
-
-    const handleSelectStar = (star) => {
-        props.onSelectStar(star);
-        setSelectedStar(star)
     };
 
     const togglePriceVisibility = () => {
@@ -27,10 +37,18 @@ function Filter(props) {
         setSeeMoreText(showPrice ? 'Xem thêm' : 'Thu gọn');
     };
 
+    const handleSelectStar = (star) => {
+        props.onSelectStar(star);
+        setSelectedStar(star)
+    };
+
     return (
         <>
-            <div className="flex flex-col bg-white rounded-lg py-3 px-1 h-fit">
-                <div className="flex flex-col w-[200px]">
+            <div className="hidden max-[768px]:flex">
+
+            </div>
+            <div className="flex flex-col bg-white rounded-lg py-3 px-1 h-fit max-[768px]:hidden">
+                <div className="flex flex-col w-52">
                     <div className="font-bold p-1">Danh mục sản phẩm</div>
                     <div className={`p-1 ${selectedCategory === 'English Books' ? 'text-sky-700' : 'text-black'} hover:cursor-pointer hover:text-sky-700`} onClick={() => handleSelectCategory('English Books')}>
                         English Books
@@ -48,23 +66,48 @@ function Filter(props) {
                 <div className="border-solid border-t mt-2">
                     <div className="font-bold p-1">Nhà cung cấp</div>
                     <div className="flex p-1">
-                        <input type="checkbox" value=""/>
+                        <input 
+                            type="checkbox" 
+                            value=""
+                            checked={selectedCurrentSeller.includes('Nhà sách Fahasa')}
+                            onChange={() => handleSelectCurrentSeller('Nhà sách Fahasa')}
+                        />
                         <p className="ml-2">Nhà sách Fahasa</p>
                     </div>
                     <div className="flex p-1">
-                        <input type="checkbox" value=""/>
+                        <input 
+                            type="checkbox" 
+                            value=""
+                            checked={selectedCurrentSeller.includes('Bamboo Books')}
+                            onChange={() => handleSelectCurrentSeller('Bamboo Books')}
+                        />
                         <p className="ml-2">Bamboo Books</p>
                     </div>
                     <div className="flex p-1">
-                        <input type="checkbox" value=""/>
+                        <input 
+                            type="checkbox" 
+                            value=""
+                            checked={selectedCurrentSeller.includes('Time Books')}
+                            onChange={() => handleSelectCurrentSeller('Time Books')}
+                        />
                         <p className="ml-2">Time Books</p>
                     </div>
                     <div className="flex p-1">
-                        <input type="checkbox" value=""/>
+                        <input 
+                            type="checkbox" 
+                            value=""
+                            checked={selectedCurrentSeller.includes('Nhà Sách Trẻ Online')}
+                            onChange={() => handleSelectCurrentSeller('Nhà Sách Trẻ Online')}
+                        />
                         <p className="ml-2">Nhà Sách Trẻ Online</p>
                     </div>
                     <div className="flex p-1">
-                        <input type="checkbox" value=""/>
+                        <input 
+                            type="checkbox" 
+                            value=""
+                            checked={selectedCurrentSeller.includes('VBooks')}
+                            onChange={() => handleSelectCurrentSeller('VBooks')}
+                        />
                         <p className="ml-2">VBooks</p>
                     </div>
                 </div>

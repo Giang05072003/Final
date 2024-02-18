@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './components/header';
 import Footer from './components/footer';
 import Home from './components/home';
+import BookDetail from './components/bookDetail';
 
 function App() {
 
@@ -23,9 +24,11 @@ function App() {
           <Header onSearch={handleSearch} />
 
           <Routes>
-            <Route path="/book/:id" element={<Header onSearch={handleSearch} />}>
+            <Route path="/search/:searchTerm" element={<Home searchData={searchData} />} >
             </Route>
-            <Route path="/" element={<Home searchData={searchData} />}>
+            <Route path="/book/:id" element={<BookDetail />}>
+            </Route>
+            <Route path="/" element={<Home searchData={""} />}>
             </Route>
           </Routes>
 

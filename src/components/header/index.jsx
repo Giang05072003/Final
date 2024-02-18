@@ -6,9 +6,9 @@ function Header(props) {
 
     return (
         <>
-            <header className="bg-white py-2">
-                <div className="px-6 mx-40">
-                    <div className="flex items-start justify-between gap-12">
+            <header className="bg-white py-2 max-[768px]:bg-sky-500">
+                <div className="px-6 mx-40 max-[768px]:mx-2 max-[768px]:px-2">
+                    <div className="flex items-center justify-between gap-12 max-[768px]:gap-1">
                         <Logo />
                         <div className="flex flex-auto">
                             <Search onSearch={props.onSearch} />

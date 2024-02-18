@@ -22,7 +22,7 @@ function BookSmall(props) {
 
     return (
         <>
-            <div className="flex flex-col bg-white rounded-lg flex-1 max-h-96">
+            <div className="flex flex-col bg-white rounded-lg flex-1 max-h-[600px]">
                 <div className="flex items-center justify-center">
                     <div className="w-[181px] h-[181px]">
                         <img className="w-full h-full opacity-100 rounded-lg" src={firstImageData.thumbnail_url} alt="" />

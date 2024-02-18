@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
-import BookSmall from '../bookSmall';
 import Filter from '../filter';
+import Page from '../page';
+import BookMain from '../bookMain';
 
 function Home(props) {
 
@@ -10,6 +10,7 @@ function Home(props) {
     const [loading, setLoading] = useState(true);
     const [category, setCategory] = useState('');
     const [price, setPrice] = useState(null);
+    const [currentSeller, setCurrentSeller] = useState([]);
     const [star, setStar] = useState('');
 
     useEffect(() => {
@@ -38,11 +39,17 @@ function Home(props) {
     };
 
     useEffect(() => {
-        console.log(price);
     }, [price]);
 
     const handlePrice = (Price) => {
         setPrice(Price);
+    };
+
+    useEffect(() => {
+    }, [currentSeller]);
+
+    const handleCurrentSeller = (currentSeller) => {
+        setCurrentSeller(currentSeller);
     };
 
     useEffect(() => {
@@ -58,18 +65,25 @@ function Home(props) {
           category !== ''
             ? book.categories.name === category
             : true;
+
         const matchesSearch =
           props.searchData !== ''
             ? book.name.toLowerCase().includes(searchTerm)
             : true;
+
         const isNotHidden = book.isHidden === undefined || book.isHidden === false;
+
+        const matchesSupplier =
+            currentSeller.length > 0
+                ? currentSeller.includes(book.current_seller.name)
+                : true;
       
         const isRatingGreater =
             star !== ''
             ? parseFloat(book.rating_average) >= parseFloat(star)
             : true;
 
-        return matchesCategory && matchesSearch && isNotHidden && isRatingGreater;
+        return matchesCategory && matchesSearch && isNotHidden && isRatingGreater && matchesSupplier;
     });
     
     const sortedBooks = [...filteredBooks].sort((a, b) => {
@@ -82,6 +96,32 @@ function Home(props) {
         }
     });
 
+    const itemsPerPage = 25;
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const totalBooks = sortedBooks.length;
+    const totalPages = Math.ceil(totalBooks / itemsPerPage);
+
+    useEffect(() => {
+        if (!loading) {
+            setCurrentPage(1);
+        }
+    }, [loading]);
+
+    useEffect(() => {
+        if (currentPage > totalPages) {
+            setCurrentPage(1);
+        }
+    }, [totalPages, currentPage]);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentBooks = sortedBooks.slice(startIndex, endIndex);
+
     return (
         <>
             <div className='flex flex-1 bg-[#efefef]'>
@@ -91,21 +131,18 @@ function Home(props) {
                     </div>
                 ) : (
                     filteredBooks.length === 0 ? (
-                        <div className='flex flex-1 my-5 mx-40 gap-4'>
-                            <Filter onSelectCategory={handleCategory} onSelectStar={handleStar} onSelectPrice={handlePrice} />
+                        <div className='flex flex-1 my-5 mx-40 gap-4 max-[768px]:mx-2'>
+                            <Filter onSelectCategory={handleCategory} onSelectStar={handleStar} onSelectPrice={handlePrice} onSelectCurrentSeller={handleCurrentSeller} />
                             <div className='flex flex-1 items-center justify-center my-52 font-bold text-lg'>
                                 <p>Không tìm thấy sản phẩm!</p>
                             </div>
                         </div>
                     ) : (
-                        <div className='flex flex-1 my-5 mx-40 gap-4'>
-                            <Filter onSelectCategory={handleCategory}  onSelectStar={handleStar} onSelectPrice={handlePrice} />
-                            <div className='grid flex-1 grid-cols-5 gap-2'>
-                                {sortedBooks.map((book, index) => (
-                                    <Link className='flex' key={index} to={`/book/${book.id}`}>
-                                        <BookSmall jsonData={JSON.stringify(book)} />
-                                    </Link>
-                                ))}
+                        <div className='flex flex-1 my-5 mx-40 gap-4 max-[768px]:mx-2'>
+                            <Filter onSelectCategory={handleCategory}  onSelectStar={handleStar} onSelectPrice={handlePrice} onSelectCurrentSeller={handleCurrentSeller} />
+                            <div>
+                                <BookMain currentBooks={currentBooks} />
+                                <Page currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
                             </div>
                         </div>
                     )

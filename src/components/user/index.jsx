@@ -5,7 +5,7 @@ function User(props) {
 
     return (
         <>
-            <div className="flex ml-12">
+            <div className="flex ml-12 max-[768px]:ml-2">
                 <UserDetail 
                     imgUrl="https://salt.tikicdn.com/ts/upload/b4/90/74/6baaecfa664314469ab50758e5ee46ca.png"
                     text="Trang chủ"

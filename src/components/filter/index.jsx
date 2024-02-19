@@ -42,10 +42,51 @@ function Filter(props) {
         setSelectedStar(star)
     };
 
+    const handleResetFilters = () => {
+        handleSelectCategory("");
+        handleSelectPrice("");
+        handleSelectStar("");
+
+        document.getElementById('book').value = '';
+        document.getElementById('price').value = '';
+        document.getElementById('star').value = '';
+    };
+
     return (
         <>
-            <div className="hidden max-[768px]:flex">
-
+            <div className="hidden bg-white max-[768px]:flex max-[768px]:flex-col">
+                <div className='flex w-full items-center justify-between h-10 border-b border-neutral-300'>
+                    <div className='flex border-r border-neutral-300'>
+                        <select className='h-full' id="book" onChange={(e) => handleSelectCategory(e.target.value)}>
+                            <option value="">Chọn loại sách</option>
+                            <option value="English Books">English Books</option>
+                            <option value="Sách tiếng Việt">Sách tiếng Việt</option>
+                            <option value="Văn phòng phẩm">Văn phòng phẩm</option>
+                            <option value="Quà lưu niệm">Quà lưu niệm</option>
+                        </select>
+                    </div>
+                    <div className='flex border-r border-neutral-300'>
+                        <select className='h-full' id="price" onChange={(e) => handleSelectPrice(parseInt(e.target.value))}>
+                            <option value="">Chọn giá</option>
+                            <option value={0}>Từ thấp đến cao</option>
+                            <option value={1}>Từ cao đến thấp</option>
+                        </select>
+                    </div>
+                    <div className='flex'>
+                        <select className='h-full' id="star" onChange={(e) => handleSelectStar(e.target.value)}>
+                            <option value="">Chọn sao</option>
+                            <option value="5">Từ 5 sao</option>
+                            <option value="4">Từ 4 sao</option>
+                            <option value="3">Từ 3 sao</option>
+                        </select>
+                    </div>
+                </div>
+                <div className='flex h-10 items-center' onClick={handleResetFilters}>
+                    <span class="material-symbols-outlined">
+                        filter_alt
+                    </span>
+                    <span className='pr-2 border-r border-neutral-300'>Lọc</span>
+                </div>
             </div>
             <div className="flex flex-col bg-white rounded-lg py-3 px-1 h-fit max-[768px]:hidden">
                 <div className="flex flex-col w-52">

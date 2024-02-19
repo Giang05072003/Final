@@ -131,16 +131,16 @@ function Home(props) {
                     </div>
                 ) : (
                     filteredBooks.length === 0 ? (
-                        <div className='flex flex-1 my-5 mx-40 gap-4 max-[768px]:mx-2 max-[768px]:gap-0'>
+                        <div className='flex flex-1 my-5 mx-40 gap-4 max-[768px]:mx-0 max-[768px]:gap-2  max-[768px]:flex-col max-[768px]:my-0'>
                             <Filter onSelectCategory={handleCategory} onSelectStar={handleStar} onSelectPrice={handlePrice} onSelectCurrentSeller={handleCurrentSeller} />
                             <div className='flex flex-1 items-center justify-center my-52 font-bold text-lg'>
                                 <p>Không tìm thấy sản phẩm!</p>
                             </div>
                         </div>
                     ) : (
-                        <div className='flex flex-1 my-5 mx-40 gap-4 max-[768px]:mx-2 max-[768px]:gap-0'>
+                        <div className='flex flex-1 my-5 mx-40 gap-4 max-[768px]:mx-0 max-[768px]:gap-2 max-[768px]:flex-col max-[768px]:my-0'>
                             <Filter onSelectCategory={handleCategory}  onSelectStar={handleStar} onSelectPrice={handlePrice} onSelectCurrentSeller={handleCurrentSeller} />
-                            <div>
+                            <div className='max-[768px]:mx-2 max-[768px]:my-5'>
                                 <BookMain currentBooks={currentBooks} />
                                 <Page currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
                             </div>

@@ -44,8 +44,8 @@ function BookLarge(props) {
                         {images.map((image, index) => (
                             <div
                                 key={index}
-                                className={`rounded-lg border border-neutral-300 p-1 ${
-                                    selectedImage === image ? "border-blue-500" : ""
+                                className={`rounded-lg border p-1 ${
+                                    selectedImage === image ? "border-blue-500" : "border-neutral-300"
                                 }`}
                                 onClick={() => handleImageClick(index)}
                             >
